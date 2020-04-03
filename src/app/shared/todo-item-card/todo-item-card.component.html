@@ -1,0 +1,27 @@
+<!-- <mat-card class="todo-card" [ngClass]="this.todoItem.completed ? 'bg-completed' :  ''"> -->
+<mat-card class="todo-card">
+  <mat-card-header>
+    <!-- <div mat-card-avatar class="example-header-image"></div> -->
+    <mat-card-title>{{todoItem.content}}</mat-card-title>
+    <mat-card-subtitle>{{todoItem.importance}}</mat-card-subtitle>
+    <mat-card-subtitle>{{todoItem.status}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="card-content">
+    <p *ngIf="todoItem.createdAt">
+      <small>Created at:
+        <b>{{todoItem.createdAt}}</b>
+      </small>
+    </p>
+  </mat-card-content>
+  <mat-card-actions class="card-actions">
+    <button (click)="completeClick()" type="button" class="btn btn-success" aria-label="Edit">
+      Complete
+    </button>
+    <button *ngIf="!readOnlyTODO" (click)="editClick()" type="button" class="btn btn-info" aria-label="Edit">
+      Edit
+    </button>
+    <button *ngIf="!readOnlyTODO" (click)="deleteClick()" type="button" class="btn btn-danger" aria-label="Delete">
+      Delete
+    </button>
+  </mat-card-actions>
+</mat-card>
