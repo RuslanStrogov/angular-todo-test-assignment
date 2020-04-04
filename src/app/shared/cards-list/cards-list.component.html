@@ -1,10 +1,19 @@
 <div class="mx-auto right mb-15">
   <button class="btn mr-10" (click)="showCards()" [ngClass]="{'btn-info': typeToShow === 'cards'}">
-    {{'todo-list-section.show-cards'}}
+    Cards
   </button>
   <button class="btn" (click)="showTable()" [ngClass]="{'btn-info': typeToShow === 'table'}">
-    {{'todo-list-section.show-list'}}
+    Table
   </button>
+
+  <button class="btn">
+  Sort
+  </button>
+
+  <button class="btn">
+  Filter
+  </button>
+
 </div>
 <ng-container *ngIf="typeToShow === 'table'">
   <app-list [tableRef]="tableRef" [data]="data">

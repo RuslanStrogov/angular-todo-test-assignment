@@ -3,12 +3,13 @@
     <h5>Todo list</h5>
     <hr>
 
-    <app-cards-list [tableRef]="todoListRef" [cardRef]="todoItemCardRef" [data]="todoList"></app-cards-list>
+    <div>
+      Todos created today: {{todoList | duedateTodayCount}}
+    </div>
 
     <hr>
-    <div>
-      {{'todo-list-section.todos-duedate-today'}}: {{todoList | duedateTodayCount}}
-    </div>
+
+    <app-cards-list [tableRef]="todoListRef" [cardRef]="todoItemCardRef" [data]="todoList"></app-cards-list>
   </div>
 
   <hr>

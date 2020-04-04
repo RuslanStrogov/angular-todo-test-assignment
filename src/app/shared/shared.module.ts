@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-// import { TranslateModule } from '@ngx-translate/core';
 
 // import { InvalidDateValidatorDirective } from '@app/shared/invalid-date.directive';
 // import { SpinnerOverlayWrapperModule } from '@app/shared/spinner-overlay-wrapper/spinner-overlay-wrapper.module';
@@ -28,7 +27,6 @@ import { TodoItemListRowComponent } from './todo-item-list-row/todo-item-list-ro
     // InvalidDateValidatorDirective,
     // SpinnerModule,
     // SpinnerOverlayWrapperModule,
-    // TranslateModule,
     CardListModule,
     TodoItemListRowComponent,
     TodoItemCardComponent,

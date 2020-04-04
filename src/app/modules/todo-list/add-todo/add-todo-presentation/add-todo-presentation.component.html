@@ -1,5 +1,5 @@
 <div class="mx-auto col-10">
-  <h5>{{'add-todo.headline'}}</h5>
+  <h5>Add todo item</h5>
   <hr>
 
   <div *ngIf="form.submitted && form.invalid" class="alert alert-danger" role="alert">
@@ -12,13 +12,13 @@
         placeholder="Enter content">
     </div>
     <div class="form-group">
-      <label for="todo-status">{{'add-todo.status'}}</label>
+      <label for="todo-status">Status</label>
       <input type="text" name="todo-status" [(ngModel)]="currentTODO.status" class="form-control" id="todo-status"
         placeholder="Enter status">
     </div>
 
     <div class="form-group">
-      <label for="todo-importance">{{'add-todo.importance'}}</label>
+      <label for="todo-importance">Importance</label>
       <input type="text" name="todo-importance" [(ngModel)]="currentTODO.importance" class="form-control" id="todo-description"
         placeholder="Enter importance">
     </div>
