@@ -38,8 +38,8 @@ export class TodoItem implements ITodoItem {
     id?: string,
     createdAt?: Date
   ) {
-    this.createdAt = createdAt ? ? new Date();
-    this.id = id ? ? String(`${this.createdAt.getTime()}-${idCounter++}`);
+    this.createdAt = createdAt ?? new Date();
+    this.id = id ?? String(`${this.createdAt.getTime()}-${idCounter++}`);
     this.status = status;
     this.importance = importance;
     this.content = content;
