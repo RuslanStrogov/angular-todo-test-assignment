@@ -1,0 +1,14 @@
+<div mat-dialog-title class="flex-container">
+  <button mat-mini-fab color="primary" [mat-dialog-close]="true">
+    &times;
+  </button>
+  <h3 class="ml-10" *ngIf="currentTodo && currentTodo.id; else dialogTitleAdd">Edit {{currentTodo.content}}</h3>
+</div>
+
+<mat-dialog-content>
+  <app-add-todo-presentation [currentTodo]="currentTodo" (saved)="save($event)"></app-add-todo-presentation>
+</mat-dialog-content>
+
+<ng-template #dialogTitleAdd>
+  <h3 class="ml-10">Add new item</h3>
+</ng-template>

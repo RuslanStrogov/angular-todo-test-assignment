@@ -1,7 +1,6 @@
-<!-- <mat-card class="todo-card" [ngClass]="this.todoItem.completed ? 'bg-completed' :  ''"> -->
+<!-- <mat-card class="todo-card" [ngClass]="this.todoItem.completed ? 'bg-completed' :  ''">
 <mat-card class="todo-card">
   <mat-card-header>
-    <!-- <div mat-card-avatar class="example-header-image"></div> -->
     <mat-card-title>{{todoItem.content}}</mat-card-title>
     <mat-card-subtitle>{{todoItem.importance}}</mat-card-subtitle>
     <mat-card-subtitle>{{todoItem.status}}</mat-card-subtitle>
@@ -9,7 +8,7 @@
   <mat-card-content class="card-content">
     <p *ngIf="todoItem.createdAt">
       <small>Created at:
-        <b>{{todoItem.createdAt}}</b>
+        <b>{{todoItem.createdAt | date:'HH:mm:SS, MMM d'}}</b>
       </small>
     </p>
   </mat-card-content>
@@ -24,4 +23,55 @@
       Delete
     </button>
   </mat-card-actions>
+</mat-card> -->
+
+
+<mat-card class="todo-item" *ngIf="this.todoItem">
+  <!-- <li class="list-group-item d-flex justify-content-between lh-condensed" [ngClass]="this.todoItem.importance ? 'bg-completed' :  ''"> -->
+  <!-- <li class="list-group-item d-flex justify-content-between lh-condensed"> -->
+  <mat-card-content>
+    <h6 class="my-0">{{todoItem.content}}</h6>
+    <div>
+      <small class="text-muted">Importance: <b>{{renderImportance(todoItem.importance)}}</b></small>
+    </div>
+    <div>
+      <small class="text-muted">Status: <b>{{todoItem.status}}</b></small>
+    </div>
+    <div *ngIf="todoItem.createdAt">
+      <small>Created at:
+        <b>{{todoItem.createdAt | date:'HH:mm:SS, MMM d'}}</b>
+      </small>
+    </div>
+  </mat-card-content>
+
+  <!-- <div class="align-right btn-group-vertical"> -->
+
+
+  <mat-card-actions>
+    <button
+      mat-stroked-button
+      *ngIf="todoItem.status && todoItem.status === 'open'"
+      (click)="switchStateClick()"
+      type="button"
+      aria-label="Status">
+      Done task
+    </button>
+    <button
+      mat-stroked-button
+      color="accent"
+      *ngIf="todoItem.status && todoItem.status === 'done'"
+      (click)="switchStateClick()"
+      type="button"
+      aria-label="Status">
+      Open task
+    </button>
+
+    <button mat-button (click)="editClick()" type="button" aria-label="Edit">
+      Edit
+    </button>
+    <button mat-button (click)="deleteClick()" type="button" aria-label="Delete">
+      Delete
+    </button>
+  </mat-card-actions>
+  <!-- </li> -->
 </mat-card>

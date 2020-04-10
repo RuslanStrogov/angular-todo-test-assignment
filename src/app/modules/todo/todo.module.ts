@@ -16,4 +16,5 @@ const LOCAL_STORAGE_KEY = 'ANGULAR_TEST_TASK_STORE';
     TodoStoreService
   ]
 })
-export class TodoModule {}
+export class TodoModule {
+}

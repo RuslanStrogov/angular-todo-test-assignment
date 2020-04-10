@@ -1,6 +1,7 @@
 <div class="cards-wrapper" *ngIf="data.length > 0; else noContent">
   <div class="card-item" *ngFor="let dataItem of data">
-    <ng-container *ngIf="cardRef; else noCard" [ngTemplateOutlet]="cardRef" [ngTemplateOutletContext]="{data: dataItem}">
+    <ng-container *ngIf="cardRef; else noCard" [ngTemplateOutlet]="cardRef"
+                  [ngTemplateOutletContext]="{data: dataItem}">
     </ng-container>
   </div>
 </div>

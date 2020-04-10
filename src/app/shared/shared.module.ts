@@ -1,36 +1,39 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
-// import { InvalidDateValidatorDirective } from '@app/shared/invalid-date.directive';
-// import { SpinnerOverlayWrapperModule } from '@app/shared/spinner-overlay-wrapper/spinner-overlay-wrapper.module';
-// import { SpinnerModule } from '@shared-lib/spinner/spinner.module';
+import { InvalidDateValidatorDirective } from './invalid-date.directive';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { CardListModule } from './cards-list/cards-list.module';
 import { TodoItemCardComponent } from './todo-item-card/todo-item-card.component';
 import { TodoItemListRowComponent } from './todo-item-list-row/todo-item-list-row.component';
+import { SuccessDialogComponent } from './dialogs/success-dialog/success-dialog.component';
+import { ErrorDialogComponent } from './dialogs/error-dialog/error-dialog.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    // SpinnerModule,
-    // SpinnerOverlayWrapperModule,
-    // TranslateModule,
     CardListModule,
-    AppMaterialModule
+    AppMaterialModule,
+    FlexLayoutModule
   ],
   declarations: [
-    // InvalidDateValidatorDirective,
+    InvalidDateValidatorDirective,
     TodoItemListRowComponent,
-    TodoItemCardComponent
+    TodoItemCardComponent,
+    SuccessDialogComponent,
+    ErrorDialogComponent
   ],
   exports: [
-    // InvalidDateValidatorDirective,
-    // SpinnerModule,
-    // SpinnerOverlayWrapperModule,
+    InvalidDateValidatorDirective,
     CardListModule,
     TodoItemListRowComponent,
     TodoItemCardComponent,
-    AppMaterialModule
+    AppMaterialModule,
+    FlexLayoutModule,
+    SuccessDialogComponent,
+    ErrorDialogComponent
   ]
 })
-export class SharedModule {}
+export class SharedModule {
+}

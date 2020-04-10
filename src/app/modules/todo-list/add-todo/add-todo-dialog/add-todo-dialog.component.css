@@ -1,0 +1,7 @@
+.flex-container {
+  display: flex;
+}
+
+.add-todo-dialog {
+  position: relative !important;
+}

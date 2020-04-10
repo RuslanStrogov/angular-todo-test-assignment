@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
-import { ITodoItemStruct, ITodoItem, TodoItem, todoItemFactory, todoItemFromStructFactory } from '../../todo/todo.model';
+import { TodoItem } from '../../todo/todo.model';
 import { AddTodoService } from './add-todo.service';
 
 @Component({
@@ -10,33 +9,31 @@ import { AddTodoService } from './add-todo.service';
   styleUrls: ['./add-todo.component.css'],
   viewProviders: [AddTodoService]
 })
-export class AddTodoComponent implements OnInit {
-  // @Input()
-  // public isLoading = false;
+export class AddTodoComponent {
 
-  public get currentTODO(): TodoItem {
-    return this.addTodoService.currentTODO;
+  public get currentTodo(): TodoItem {
+    return this.addTodoService.currentTodo;
   }
+
   @Input()
-  public set currentTODO(todo: TodoItem) {
-    this.addTodoService.currentTODO = todo;
+  public set currentTodo(todo: TodoItem) {
+    this.addTodoService.currentTodo = todo;
   }
 
   @Output()
   public get todoItemEdit() {
-    return this.addTodoService.TodoItemEdit;
+    return this.addTodoService.todoItemEdit;
   }
 
   @Output()
   public get todoItemCreate() {
-    return this.addTodoService.TodoItemCreate;
+    return this.addTodoService.todoItemCreate;
   }
 
-  constructor(private addTodoService: AddTodoService) {}
+  constructor(private addTodoService: AddTodoService) {
+  }
 
-  public ngOnInit() {}
-
-  public save(form: NgForm) {
-    this.addTodoService.save(form);
+  public save(value: NgForm) {
+    this.addTodoService.save(value);
   }
 }

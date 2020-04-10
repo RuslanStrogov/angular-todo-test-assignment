@@ -12,19 +12,19 @@ export class CardsTableComponent implements OnInit {
   @Input() public tableRef: any;
 
   private preferedShowModeKey = 'typeToShow';
+
   public get typeToShow(): string {
     return window.localStorage.getItem(this.preferedShowModeKey) || 'table';
   }
+
   public set typeToShow(showMode: string) {
     window.localStorage.setItem(this.preferedShowModeKey, showMode);
   }
 
-  constructor() {}
+  constructor() {
+  }
 
   public ngOnInit() {
-
-    console.log('CardsTableComponent this.data', this.data);
-
   }
 
   public showCards() {

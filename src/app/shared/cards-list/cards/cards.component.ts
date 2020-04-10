@@ -10,7 +10,9 @@ export class CardsComponent implements OnInit {
   @Input() public cardRef: TemplateRef<any>;
   @Input() public data: any;
 
-  constructor() {}
+  constructor() {
+  }
 
-  public ngOnInit() {}
+  public ngOnInit() {
+  }
 }

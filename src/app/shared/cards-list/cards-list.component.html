@@ -1,20 +1,13 @@
 <div class="mx-auto right mb-15">
-  <button class="btn mr-10" (click)="showCards()" [ngClass]="{'btn-info': typeToShow === 'cards'}">
-    Cards
+  <button mat-button (click)="showCards()" [ngClass]="{'btn-secondary': typeToShow === 'cards'}">
+    Cards view
   </button>
-  <button class="btn" (click)="showTable()" [ngClass]="{'btn-info': typeToShow === 'table'}">
-    Table
-  </button>
-
-  <button class="btn">
-  Sort
-  </button>
-
-  <button class="btn">
-  Filter
+  <button mat-button (click)="showTable()" [ngClass]="{'btn-secondary': typeToShow === 'table'}">
+    Table view
   </button>
 
 </div>
+
 <ng-container *ngIf="typeToShow === 'table'">
   <app-list [tableRef]="tableRef" [data]="data">
   </app-list>

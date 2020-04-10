@@ -14,7 +14,7 @@ const getInitialState = (key: string): ITodoItem[] => {
     return (
       (JSON.parse(localState) as ITodoItemStruct[]).map(
         todoItemFromStructFactory
-      ) ?? []
+      ) ? ? []
     );
   } catch {
     return [];
@@ -24,7 +24,8 @@ const getInitialState = (key: string): ITodoItem[] => {
 const saveState = (key: string, state: ITodoItem[]) => {
   try {
     localStorage.setItem(key, JSON.stringify(state));
-  } catch {}
+  } catch {
+  }
 };
 
 @Injectable()
@@ -34,7 +35,8 @@ export class TodoStoreService {
     .asObservable()
     .pipe(tap(state => saveState(this.localStorageKey, state)));
 
-  constructor(@Inject(LOCAL_STORAGE_TOKEN) private localStorageKey: string) {}
+  constructor(@Inject(LOCAL_STORAGE_TOKEN) private localStorageKey: string) {
+  }
 
   addItem(item: ITodoItem) {
     const items = [...this.store$$.getValue(), item];

@@ -1,28 +1,198 @@
 <div class="todo-list-wrapper" *ngIf="(todoList$ | async) as todoList">
-  <div class="mx-auto col-10">
+  <div class="mx-auto pt-30 col-10">
     <h5>Todo list</h5>
-    <hr>
-
-    <div>
-      Todos created today: {{todoList | duedateTodayCount}}
+    <mat-divider></mat-divider>
+    <div class="todo-list-statistics mt-10 mb-10">
+      <div class="col-4 p-2 flexbox-parent" style="text-align: center">
+        <div layout="row" layout-align="center center">
+          <button flex="15" mat-flat-button color="primary" (click)="openAddDialog()">ADD ITEM</button>
+          <br>
+          <button flex="15" mat-button style="font-size: .6em">Clear all</button>
+        </div>
+      </div>
+      <mat-card class="col-2 p-2">
+        <mat-card-title>Total</mat-card-title>
+        <mat-card-content>
+          <h2>{{todoList | totalCount}}</h2>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="col-2 p-2">
+        <mat-card-title>Active</mat-card-title>
+        <mat-card-content>
+          <h2>{{todoList | activeCount}}</h2>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="col-2 p-2">
+        <mat-card-title>Done</mat-card-title>
+        <mat-card-content>
+          <h2>{{todoList | doneCount}}</h2>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="col-2 p-2">
+        <mat-card-title>Today</mat-card-title>
+        <mat-card-content>
+          <h2>{{todoList | todayCount}}</h2>
+        </mat-card-content>
+      </mat-card>
     </div>
-
-    <hr>
-
     <app-cards-list [tableRef]="todoListRef" [cardRef]="todoItemCardRef" [data]="todoList"></app-cards-list>
   </div>
 
-  <hr>
+  <!-- <app-add-todo
+   [currentTODO]="selectedTodoForEdit$ | async"
+   (todoItemEdit)="todoItemEdit($event)"
+   (todoItemCreate)="todoItemCreate($event)"></app-add-todo> -->
 
-  <app-add-todo [currentTODO]="selectedTodoForEdit$ | async" (todoItemEdit)="todoItemEdit($event)" (todoItemCreate)="todoItemCreate($event)"></app-add-todo>
 </div>
 
 <ng-template #todoItemCardRef let-todo="data">
-  <app-todo-item-card [todoItem]="todo" (todoDelete)="deleteTodo($event)" (todoEdit)="setTodoForEdit($event)"></app-todo-item-card>
+  <app-todo-item-card
+    [todoItem]="todo"
+    (todoEdit)="setTodoForEdit($event)"
+    (todoDelete)="deleteTodo($event)"
+    (todoSwitchState)="todoSwitchState($event)"
+  ></app-todo-item-card>
 </ng-template>
 
 <ng-template #todoListRef let-todos="data">
-  <ul class="list-group mb-3">
-    <app-todo-item-list-row *ngFor="let todo of todos; trackBy: trackByFn" [todoItem]="todo" (todoDelete)="deleteTodo($event)" (todoComplete)="todoItemEdit ($event)" (todoEdit)="setTodoForEdit($event)"></app-todo-item-list-row>
-  </ul>
+
+  <div fxLayout fxLayoutAlign="center center">
+    <mat-form-field fxFlex="40%">
+      <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Search by content">
+    </mat-form-field>
+
+
+  </div>
+
+  <table mat-table [dataSource]="todoListData" matSort>
+    <ng-container matColumnDef="content">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Content</th>
+      <td mat-cell *matCellDef="let element"> {{element.content}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created At</th>
+      <td mat-cell *matCellDef="let element"> {{element.createdAt | date}} </td>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container> -->
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>
+        <div class="header">
+          Status
+          <button mat-button-icon class="btn-toggle" style="width: 32px; border: none; background: none"
+                  [matMenuTriggerFor]="menu">
+            &#10063;
+          </button>
+
+        </div>
+        <mat-menu #menu>
+          <div mat-menu-item mat-filter-item [disableRipple]="true" class="menu-title">
+            Status.
+          </div>
+          <div mat-menu-item mat-filter-item [disableRipple]="true">
+            <mat-form-field>
+              <mat-select [panelClass]="'mat-elevation-z10'" placeholder='Conditions'
+                          [(value)]="searchCondition.status">
+                <mat-option *ngFor="let condition of conditionsList"
+                            [value]="condition.value">{{condition.label}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div mat-menu-item mat-filter-item [disableRipple]="true">
+            <mat-form-field>
+              <input matInput placeholder="Value" [(ngModel)]="searchValue.status">
+            </mat-form-field>
+          </div>
+
+          <div mat-menu-item mat-filter-item [disableRipple]="true">
+            <button mat-raised-button (click)="clearColumn('status')">Clear</button>
+            <button mat-raised-button color="primary" (click)="applyFilter()">Search</button>
+
+          </div>
+        </mat-menu>
+
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="importance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Importance</th>
+      <td mat-cell *matCellDef="let element"> {{renderImportance(element.importance)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions</th>
+      <td mat-cell *matCellDef="let element">
+
+        <!-- <button mat-icon-button color="primary" (click)="todoSwitchState(element)">
+            <mat-icon class="mat-18">reorder</mat-icon>
+        </button> -->
+
+        <button
+          mat-stroked-button
+          *ngIf="element.status && element.status === 'open'"
+          (click)="todoSwitchState(element)"
+          type="button"
+          aria-label="Status">
+          Done task
+        </button>
+        <button
+          mat-stroked-button
+          color="accent"
+          *ngIf="element.status && element.status === 'done'"
+          (click)="todoSwitchState(element)"
+          type="button"
+          aria-label="Status">
+          Open task
+        </button>
+
+        <button mat-icon-button color="accent" (click)="setTodoForEdit(element)">
+          <mat-icon style="font-size: 1.6em;">✎</mat-icon>
+        </button>
+
+        <button mat-icon-button color="warn" (click)="deleteTodo(element)">
+          <mat-icon style="font-size: 1.6em;">🗑</mat-icon>
+        </button>
+
+      </td>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="update">
+        <th mat-header-cell *matHeaderCellDef> Update </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="accent" (click)="redirectToUpdate(element.id)">
+              <mat-icon class="mat-18">system_update</mat-icon>
+          </button>
+        </td>
+      </ng-container> -->
+
+    <!-- <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="warn" (click)="redirectToDelete(element.id)">
+              <mat-icon class="mat-18">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container> -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- <ul class="list-group mb-3">
+    <app-todo-item-list-row
+      *ngFor="let todo of todos; trackBy: trackByFn"
+      [todoItem]="todo"
+      (todoEdit)="setTodoForEdit($event)"
+      (todoDelete)="deleteTodo($event)"
+      (todoSwitchState)="todoSwitchState($event)"
+      ></app-todo-item-list-row>
+  </ul> -->
+
 </ng-template>

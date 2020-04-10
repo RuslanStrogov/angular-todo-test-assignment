@@ -1,7 +1,12 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
 
-// import { TODOItem } from '@app/shared/models/todo-item';
-import { TodoItem } from '../../modules/todo/todo.model';
+import { TodoItem, TodoImportance } from '../../modules/todo/todo.model';
 
 @Component({
   selector: 'app-todo-item-card',
@@ -11,15 +16,19 @@ import { TodoItem } from '../../modules/todo/todo.model';
 })
 export class TodoItemCardComponent {
   @Input() public todoItem: TodoItem;
-  @Input() public readOnlyTODO: boolean;
   @Output() public todoDelete = new EventEmitter<TodoItem>();
   @Output() public todoEdit = new EventEmitter<TodoItem>();
+  @Output() public todoSwitchState = new EventEmitter<TodoItem>();
 
-  public completeClick() {
-    //TODO
-    console.log('TODO completeClick')
-    this.todoItem.switchState();
-    // this.todoItem.completed = !this.todoItem.completed;
+  constructor() {
+  }
+
+  public renderImportance(importance: TodoImportance) {
+    return TodoImportance[importance];
+  }
+
+  public switchStateClick() {
+    this.todoSwitchState.emit(this.todoItem);
   }
 
   public deleteClick() {

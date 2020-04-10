@@ -7,8 +7,7 @@ import {
   Output
 } from '@angular/core';
 
-// import { TODOItem } from '@app/shared/models/todo-item';
-import { TodoItem } from '../../modules/todo/todo.model';
+import { TodoItem, TodoImportance } from '../../modules/todo/todo.model';
 
 @Component({
   selector: 'app-todo-item-list-row',
@@ -16,26 +15,21 @@ import { TodoItem } from '../../modules/todo/todo.model';
   styleUrls: ['./todo-item-list-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TodoItemListRowComponent implements OnInit {
+export class TodoItemListRowComponent {
   @Input() public todoItem: TodoItem;
-  @Input() public readOnlyTODO: boolean;
   @Output() public todoDelete = new EventEmitter<TodoItem>();
   @Output() public todoEdit = new EventEmitter<TodoItem>();
-  @Output() public todoComplete = new EventEmitter<TodoItem>();
+  @Output() public todoSwitchState = new EventEmitter<TodoItem>();
 
-  constructor() {}
+  constructor() {
+  }
 
-  public ngOnInit() {}
+  public renderImportance(importance: TodoImportance) {
+    return TodoImportance[importance];
+  }
 
-  public completeClick() {
-    //TODO
-    console.log('TODO completeClick');
-    // const newTodo = {
-    //   ...this.todoItem,
-    //   // completed: !this.todoItem.completed
-    // };
-
-    // this.todoComplete.emit(newTodo);
+  public switchStateClick() {
+    this.todoSwitchState.emit(this.todoItem);
   }
 
   public deleteClick() {

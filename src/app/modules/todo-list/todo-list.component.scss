@@ -1,0 +1,30 @@
+table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 500px;
+
+  .mat-column-status {
+    text-transform: capitalize;
+  }
+
+}
+
+th.mat-header-cell {
+  text-align: left;
+  max-width: 300px;
+}
+
+.todo-list-statistics {
+  display: flex;
+
+  mat-card {
+    text-align: center;
+
+    mat-card-title {
+      font-size: .8em;
+      color: #cccccc;
+    }
+  }
+
+}

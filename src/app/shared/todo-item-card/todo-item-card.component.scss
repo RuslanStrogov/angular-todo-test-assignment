@@ -10,3 +10,9 @@
   display: flex;
   justify-content: space-around;
 }
+
+mat-card-actions button {
+  font-size: 0.75em;
+  padding: 0 5px;
+  line-height: 24px;
+}
